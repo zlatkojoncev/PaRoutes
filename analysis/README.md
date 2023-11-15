@@ -66,6 +66,9 @@ This folder contains two scripts for analyses:
 Example usage:
 
     python route_quality.py --routes ~/output_routes.json --references ../data/n1-routes.json --output ~/route_analyses.csv
+    python analysis/route_quality.py --routes ../analysis/data/output_routes.json --references ../data/n1-routes.json --output ..analysis/data/route_analyses.csv
+    python analysis/route_quality.py --routes /home/joncev/git/PaRoutes/analysis/data/output_routes.json --references data/n1-routes.json --output /home/joncev/git/PaRoutes/analysis/data/route_analyses.csv
+    /home/joncev/git/PaRoutes/analysis/data/output_routes.json
 
 where `~/output_routes.json` is the correctly formated route predictions for the **n1** set.
 

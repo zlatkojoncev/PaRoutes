@@ -38,10 +38,13 @@ from route_distances.utils.routes import (
 
 
 def _analyze_routes(
-    routes: List[Dict[str, Any]],
-    reference: Dict[str, Any],
+    routes: List[Dict[str, Any]], #this is not correct, a single route dictionary is passed to 
+    reference: Dict[str, Any],    #_analyze_routes in main in zip(...)
     ks: List[int],
 ) -> Dict[str, float]:
+    print("I am in _analyze_routes")
+    print(type(routes))
+    print(routes)
     max_k = max(ks)
     routes, scores = route_scorer(routes)
     ranks = route_ranks(scores)
@@ -137,13 +140,20 @@ def main(optional_args: Optional[Sequence[str]] = None) -> None:
             with open(filename) as fileobj:
                 routes = json.load(fileobj)
         routes_list.extend(routes)
-
+    for route in routes_list[0:10]:
+        print(f"This is the type of route {type(route)}")
+        print(route)
+        reactions = route.get("children", [])
+        print(reactions)
+    print(len(routes))
+    print(f"this is the type of routes {type(routes)}")
     with open(args.references, "r") as fileobj:
         references = json.load(fileobj)
 
     stats = []
     for routes, reference in zip(routes_list, tqdm(references)):
-        stats.append(_analyze_routes(routes, reference, args.ks))
+        print(f"this is a zip of routes and references {routes, reference}")
+        stats.append(_analyze_routes(routes, references, args.ks))
     stats = pd.DataFrame(stats)
 
     print(f"Number of solved targets: {stats['solved target'].sum()}")
